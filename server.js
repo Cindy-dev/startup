@@ -1,8 +1,31 @@
-import http from 'node:http'
+import express from 'express'
+import { apiRouter } from './routes/apiRoutes.js'
+import cors from 'cors'
 
-const server = http.createServer((req, res)=> {
-    console.log('server accessed')
-    res.end('<html><body>Hello</body></html>')
+const PORT = 8000
+
+/*
+Challenge:
+1. Refactor the code to use express.Router()
+*/
+
+const app = express()
+
+app.use(cors())
+
+app.use('/api',apiRouter)
+
+
+/*
+Challenge:
+1. If a client uses an unknown route, serve this JSON 
+
+{ message: "Endpoint not found. Please check the API documentation." }
+
+Remember to serve an error code!
+*/
+app.use((req, res)=>{
+res.status(404).json({ message: "Endpoint not found. Please check the API documentation." })
 })
 
-server.listen(8000, ()=>console.log('listening 8000'))
+app.listen(PORT, () => console.log(`server connected on port ${PORT}`))
