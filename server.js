@@ -8,10 +8,11 @@ const PORT = 8000
 Challenge:
 1. Refactor the code to use express.Router()
 */
-
 const app = express()
 
 app.use(cors())
+
+app.use(express.json())
 
 app.use('/api',apiRouter)
 
